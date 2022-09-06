@@ -59,4 +59,12 @@ export class BoardService {
     const { password, ...rest } = input;
     return await this.boardRepository.save({ ...board, ...rest });
   }
+
+  async findall() {
+    return await this.boardRepository.find({
+      order: {
+        createdDate: 'ASC',
+      },
+    });
+  }
 }
