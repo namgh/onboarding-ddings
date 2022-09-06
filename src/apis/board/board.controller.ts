@@ -37,4 +37,9 @@ export class BoardCotroller {
   async findall() {
     return await this.boardService.findall();
   }
+
+  @Get('/:page')
+  async findpage(@Param('page') page: number) {
+    return await this.boardService.findpage({ page });
+  }
 }

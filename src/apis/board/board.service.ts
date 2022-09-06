@@ -63,8 +63,18 @@ export class BoardService {
   async findall() {
     return await this.boardRepository.find({
       order: {
-        createdDate: 'ASC',
+        createdDate: 'DESC',
       },
+    });
+  }
+
+  async findpage({ page }) {
+    return await this.boardRepository.find({
+      order: {
+        createdDate: 'DESC',
+      },
+      skip: (page - 1) * 20,
+      take: 20,
     });
   }
 }
