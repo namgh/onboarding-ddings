@@ -36,4 +36,9 @@ export class BoardService {
     if (input.content.length > 200)
       throw new ConflictException('content 길이 200 초과');
   }
+
+  async delete({ id }) {
+    const result = await this.boardRepository.softDelete({ id });
+    return result.affected ? true : false;
+  }
 }
