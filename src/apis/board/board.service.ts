@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Board } from './entities/board.entity';
@@ -37,7 +41,11 @@ export class BoardService {
       throw new ConflictException('content 길이 200 초과');
   }
 
-  async delete({ id }) {
+  async delete({ id, input }) {
+    const board = await this.boardRepository.findOne({ where: { id } });
+    if (!board) throw new ConflictException('id값에 일치하는 정보가 없습니다');
+    const authcheck = await bcrypt.compare(input.password, board.password); //user.password - 해쉬된 비밀번호
+    if (!authcheck) throw new UnauthorizedException('비밀번호가 틀렸습니다!!!');
     const result = await this.boardRepository.softDelete({ id });
     return result.affected ? true : false;
   }

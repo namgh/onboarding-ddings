@@ -17,6 +17,6 @@ export class BoardCotroller {
 
   @Delete(':id')
   async delete(@Body() input: BoardDelete, @Param('id') id: string) {
-    return await this.boardService.delete({ id });
+    return await this.boardService.delete({ id, input });
   }
 }
