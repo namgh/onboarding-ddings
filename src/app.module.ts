@@ -1,18 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { BoardModule } from './apis/board/board.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './apis/user/user.module';
-import { AuthModule } from './apis/auth/auth.module';
-import { NoticeBoardModule } from './apis/notice_board/notice_board.module';
-import { OperationBoardModule } from './apis/operation_board/operation_board.module';
-import { GeneralBoardModule } from './apis/general_board/general_board.module';
 
 @Module({
   imports: [
-    UserModule,
-    AuthModule,
+    BoardModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -25,12 +20,6 @@ import { GeneralBoardModule } from './apis/general_board/general_board.module';
       synchronize: true,
       logging: true,
     }),
-
-    NoticeBoardModule,
-
-    OperationBoardModule,
-
-    GeneralBoardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
